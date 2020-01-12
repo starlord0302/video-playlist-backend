@@ -3,9 +3,11 @@ package com.starlord0302.videoplaylist.services;
 import com.starlord0302.videoplaylist.models.Video;
 import com.starlord0302.videoplaylist.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class VideoServiceImpl implements VideoService {
 
     @Autowired
