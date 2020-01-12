@@ -23,4 +23,14 @@ public class VideoServiceImpl implements VideoService {
     public Optional<Video> getVideo(Long id) {
         return videoRepository.findById(id);
     }
+
+    @Override
+    public Video saveVideo(Video video) {
+        return videoRepository.save(video);
+    }
+
+    @Override
+    public boolean isVideoExists(Video video) {
+        return getVideo(video.getId()).isPresent();
+    }
 }

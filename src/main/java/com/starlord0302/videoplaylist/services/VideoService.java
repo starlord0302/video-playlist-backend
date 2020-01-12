@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface VideoService {
     public List<Video> getAllVideos();
     public Optional<Video> getVideo(Long id);
+    public Video saveVideo(Video video);
+    public boolean isVideoExists(Video video);
 }

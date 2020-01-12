@@ -51,5 +51,19 @@ public class VideoController {
         }
     }
 
-
+    @PostMapping("")
+    public ResponseEntity<Video> post(@RequestHeader("Accept") String accept,
+                                      @RequestHeader("Content-Type") String contentType,
+                                      @RequestBody Video video) {
+        if(accept.equals("application/json") && contentType.equals("application/json")) {
+            if(videoService.isVideoExists(video)) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json");
+            return new ResponseEntity<>(videoService.saveVideo(video), headers, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
