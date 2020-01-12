@@ -36,13 +36,13 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getVideo(@RequestHeader("Accept") String accept, @PathVariable Long id) {
+    public ResponseEntity<Video> getVideo(@RequestHeader("Accept") String accept, @PathVariable Long id) {
         if(accept.equals("application/json")) {
             Optional<Video> video = videoService.getVideo(id);
             if(video.isPresent()) {
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Content-Type", "application/json");
-                return new ResponseEntity<>(video, headers, HttpStatus.OK);
+                return new ResponseEntity<>(video.get(), headers, HttpStatus.OK);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -62,6 +62,26 @@ public class VideoController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json");
             return new ResponseEntity<>(videoService.saveVideo(video), headers, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Video> put(@RequestHeader("Accept") String accept,
+                                     @RequestHeader("Content-Type") String contentType,
+                                     @RequestBody Video video,
+                                     @PathVariable Long id) {
+        if(accept.equals("application/json") && contentType.equals("application/json")) {
+            Optional<Video> oVideo = videoService.getVideo(id);
+            if(oVideo.isPresent()) {
+                video.setId(id);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Type", "application/json");
+                return new ResponseEntity<>(videoService.saveVideo(video), headers, HttpStatus.OK);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } else {
             return ResponseEntity.badRequest().build();
         }
