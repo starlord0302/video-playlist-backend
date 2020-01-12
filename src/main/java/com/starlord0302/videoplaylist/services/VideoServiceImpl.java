@@ -33,4 +33,9 @@ public class VideoServiceImpl implements VideoService {
     public boolean isVideoExists(Video video) {
         return getVideo(video.getId()).isPresent();
     }
+
+    @Override
+    public void deleteById(Long id) {
+        videoRepository.deleteById(id);
+    }
 }

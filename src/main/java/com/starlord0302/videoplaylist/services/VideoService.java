@@ -10,4 +10,5 @@ public interface VideoService {
     public Optional<Video> getVideo(Long id);
     public Video saveVideo(Video video);
     public boolean isVideoExists(Video video);
+    public void deleteById(Long id);
 }

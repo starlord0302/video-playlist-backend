@@ -86,4 +86,21 @@ public class VideoController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Video> delete(@RequestHeader("Accept") String accept, @PathVariable Long id) {
+        if(accept.equals("application/json")) {
+            Optional<Video> oVideo = videoService.getVideo(id);
+            if(oVideo.isPresent()) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Type", "application/json");
+                videoService.deleteById(id);
+                return new ResponseEntity<>(oVideo.get(), headers, HttpStatus.OK);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
