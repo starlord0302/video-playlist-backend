@@ -30,8 +30,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public boolean isVideoExists(Video video) {
-        return getVideo(video.getId()).isPresent();
+    public boolean findVideo(Video video) {
+        return videoRepository.findByTitle(video.getTitle()).isPresent();
     }
 
     @Override

@@ -9,6 +9,6 @@ public interface VideoService {
     public List<Video> getAllVideos();
     public Optional<Video> getVideo(Long id);
     public Video saveVideo(Video video);
-    public boolean isVideoExists(Video video);
+    public boolean findVideo(Video video);
     public void deleteById(Long id);
 }

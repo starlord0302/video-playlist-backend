@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/videos")
 public class VideoController {
 
@@ -56,7 +57,7 @@ public class VideoController {
                                       @RequestHeader("Content-Type") String contentType,
                                       @RequestBody Video video) {
         if(accept.equals("application/json") && contentType.equals("application/json")) {
-            if(videoService.isVideoExists(video)) {
+            if(videoService.findVideo(video)) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
             HttpHeaders headers = new HttpHeaders();
