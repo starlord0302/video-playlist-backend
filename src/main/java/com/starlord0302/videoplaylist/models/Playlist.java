@@ -1,10 +1,11 @@
 package com.starlord0302.videoplaylist.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "playlists")
-public class PlayList {
+public class Playlist {
 
     @Id
     @Column(name = "playlist_id")
@@ -14,10 +15,13 @@ public class PlayList {
     @Column(name = "playlist_name")
     private String playlistName;
 
-    public PlayList() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "playlist")
+    private List<PlaylistVideo> playLists;
+
+    public Playlist() {
     }
 
-    public PlayList(String playlistName) {
+    public Playlist(String playlistName) {
         this.playlistName = playlistName;
     }
 
@@ -35,5 +39,13 @@ public class PlayList {
 
     public void setPlaylistName(String playlistName) {
         this.playlistName = playlistName;
+    }
+
+    public List<PlaylistVideo> getPlayLists() {
+        return playLists;
+    }
+
+    public void setPlayLists(List<PlaylistVideo> playLists) {
+        this.playLists = playLists;
     }
 }

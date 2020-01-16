@@ -1,6 +1,7 @@
 package com.starlord0302.videoplaylist.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "videos")
@@ -13,6 +14,9 @@ public class Video {
     private String title;
     private int length;
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "video")
+    private List<PlaylistVideo> playlists;
 
     public Video() {
     }
@@ -53,5 +57,13 @@ public class Video {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<PlaylistVideo> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<PlaylistVideo> playlists) {
+        this.playlists = playlists;
     }
 }
