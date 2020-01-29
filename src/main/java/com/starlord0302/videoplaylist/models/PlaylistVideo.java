@@ -1,5 +1,8 @@
 package com.starlord0302.videoplaylist.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +15,12 @@ public class PlaylistVideo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id")
+    @JsonManagedReference
     private Video video;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_id")
+    @JsonBackReference
     private Playlist playlist;
 
     public PlaylistVideo() {

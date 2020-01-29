@@ -1,10 +1,15 @@
 package com.starlord0302.videoplaylist.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "videos")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Video {
 
     @Id
@@ -15,6 +20,7 @@ public class Video {
     private int length;
     private String description;
 
+    @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "video")
     private List<PlaylistVideo> playlists;
 
@@ -65,5 +71,15 @@ public class Video {
 
     public void setPlaylists(List<PlaylistVideo> playlists) {
         this.playlists = playlists;
+    }
+
+    public void addPlaylistVideo(PlaylistVideo playlistVideo) {
+        playlists.add(playlistVideo);
+        playlistVideo.setVideo(this);
+    }
+
+    public void removePlaylistVideo(PlaylistVideo playlistVideo) {
+        playlists.remove(playlistVideo);
+        playlistVideo.setVideo(null);
     }
 }
