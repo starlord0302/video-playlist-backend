@@ -1,8 +1,5 @@
 package com.starlord0302.videoplaylist.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,9 +15,12 @@ public class Playlist {
     @Column(name = "playlist_name")
     private String playlistName;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "playlist")
-    private List<PlaylistVideo> playlists;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "playlist_video",
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id"))
+    private List<Video> videos;
 
     public Playlist() {
     }
@@ -45,14 +45,15 @@ public class Playlist {
         this.playlistName = playlistName;
     }
 
-    public List<PlaylistVideo> getPlaylists() {
-        return playlists;
+    public List<Video> getVideos() {
+        return videos;
     }
 
-    public void setPlaylists(List<PlaylistVideo> playlists) {
-        this.playlists = playlists;
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 
+    /*
     public void addPlaylistVideo(PlaylistVideo playlistVideo) {
         playlists.add(playlistVideo);
         playlistVideo.setPlaylist(this);
@@ -61,5 +62,5 @@ public class Playlist {
     public void removePlaylistVideo(PlaylistVideo playlistVideo) {
         playlists.remove(playlistVideo);
         playlistVideo.setPlaylist(null);
-    }
+    }*/
 }
